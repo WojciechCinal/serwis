@@ -11,8 +11,9 @@
                 <nav id="nav">
                     <ul>
                         <li><a href="index.php">Strona główna</a></li>
+                        <li><a href="{url action='page_offer'}">Oferta</a></li>
                         <li><a href="{url action='page_orders'}">Zamówienia</a></li>
-                        <li><a href="#" class="button primary">Zaloguj</a></li>
+                        <li><a href="{url action='loginView'}" class="button primary">Zaloguj</a></li>
                     </ul>
                 </nav>
             </header>
