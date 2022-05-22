@@ -4,91 +4,97 @@ namespace app\controllers;
 
 use app\transfer\User;
 use app\forms\LoginForm;
+use core\App;
+use core\Utils;
+use core\ParamUtils;
+use core\RoleUtils;
+use core\SessionUtils;
 
-class LoginCtrl{
-	private $form;
-	
-	public function __construct(){
-	
-		$this->form = new LoginForm();
-	}
-	
-	public function getParams(){
-	
-		$this->form->login = getFromRequest('login');
-		$this->form->pass = getFromRequest('pass');
-	}
-	
-	public function validate() {
-		
-		if (! (isset ( $this->form->login ) && isset ( $this->form->pass ))) {
-		
-			return false;
-		}
+class LoginCtrl {
 
-		if (! getMessages()->isError ()) {
+    private $form;
+    private $user;
 
-			if ($this->form->login == "") {
-				getMessages()->addError ( 'Nie podano loginu' );
-			}
-			if ($this->form->pass == "") {
-				getMessages()->addError ( 'Nie podano hasła' );
-			}
-		}
+    public function __construct() {
 
-		if ( !getMessages()->isError() ) {
-		
-			if ($this->form->login == "admin" && $this->form->pass == "admin") {
+        $this->form = new LoginForm();
+    }
 
-				$user = new User($this->form->login, 'admin');
+    public function getParams() {
 
-				$_SESSION['user'] = serialize($user);
+        $this->form->login = ParamUtils::getFromRequest('login');
+        $this->form->pass = ParamUtils::getFromRequest('pass');
+    }
 
-				addRole($user->role);
+    public function validate() {
 
-			} else if ($this->form->login == "user" && $this->form->pass == "user") {
+        if (!(isset($this->form->login) && isset($this->form->pass))) {
 
-				$user = new User($this->form->login, 'user');
+            return false;
+        }
 
-				$_SESSION['user'] = serialize($user);
+        if (!App::getMessages()->isError()) {
 
-				addRole($user->role);
+            if ($this->form->login == "") {
+                Utils::addErrorMessage('Nie podano loginu');
+            }
+            if ($this->form->pass == "") {
+                Utils::addErrorMessage('Nie podano hasła');
+            }
+        }
 
-			} else {
-				getMessages()->addError('Niepoprawny login lub hasło');
-			}
-		}
-		
-		return ! getMessages()->isError();
-	}
-	
-	public function action_login(){
+        if (!App::getMessages()->isError()) {
+            if (App::getDB()->has("user", [
+                        "AND" => [
+                            "login" => $this->form->login],
+                        "password" => $this->form->pass,])) {
 
-		$this->getParams();
-		
-		if ($this->validate()){
+                $user = new User($this->form->login, $this->form->login);
 
-			header("Location: ".getConf()->app_url."/");
-		} else {
+                RoleUtils::addRole($user->role);
+                Utils::addInfoMessage('Zalogowano jako: ' . $user->role);
+            } else {
+                Utils::addErrorMessage('Niepoprawny login lub hasło');
+            }
+        }
 
-			$this->generateView(); 
-		}
-		
-	}
-	
-	public function action_logout(){
 
-		session_destroy();
-	
-		getMessages()->addInfo('Poprawnie wylogowano z systemu');
+        return !App::getMessages()->isError();
+    }
 
-		$this->generateView();		 
-	}
-	
-	public function generateView(){
-		
-		getSmarty()->assign('page_title','Strona logowania');
-		getSmarty()->assign('form',$this->form);
-		getSmarty()->display('LoginView.tpl');		
-	}
+    public function action_login() {
+
+        $this->getParams();
+
+        if ($this->validate()) {
+            $this->generateViewLoginSuccess();
+        } else {
+
+            $this->generateViewLogin();
+        }
+    }
+
+    public function action_logout() {
+
+        session_destroy();
+
+        Utils::addInfoMessage('Poprawnie wylogowano z systemu');
+
+        $this->generateViewLogin();
+    }
+
+    public function generateViewLogin() {
+
+        App::getSmarty()->assign('form', $this->form);
+        App::getSmarty()->display('LoginView.tpl');
+        App::getMessages();
+    }
+
+    public function generateViewLoginSuccess() {
+        App::getSmarty()->assign('user', $this->form->login);
+        App::getSmarty()->assign('form', $this->form);
+        App::getSmarty()->display('page_HOME.tpl');
+        App::getMessages();
+    }
+
 }

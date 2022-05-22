@@ -1,6 +1,20 @@
 {extends file="main.tpl"}
 
 {block name=content}
+    <section>
+        {if $msgs->isMessage()}
+            <div class="messages">
+                <h4>Informacje: </h4>
+                <ol class="err">
+                    {foreach $msgs->getMessages() as $msg}
+                        {strip}
+                            <li>{$msg->text}</li>
+                            {/strip}
+                        {/foreach}
+                </ol>
+            </div>
+        {/if}             
+    </section>    
 
 {/block}
 {block name=header}
@@ -13,7 +27,11 @@
                         <li><a href="index.php">Strona główna</a></li>
                         <li><a href="{url action='page_offer'}">Oferta</a></li>
                         <li><a href="{url action='page_orders'}">Zamówienia</a></li>
-                        <li><a href="{url action='loginView'}" class="button primary">Zaloguj</a></li>
+                            {if count($conf->roles)>0}
+                            <li><a href="{url action='logout'}" class="button primary">Wyloguj</a></li>
+                            {else}	
+                            <li><a href="{url action='loginView'}" class="button primary">Zaloguj</a></li>
+                            {/if}
                     </ul>
                 </nav>
             </header>
@@ -27,12 +45,11 @@
                 <h3>Witaj w aplikacji bazo-danowej dla serwisu samochodowego.</br></h3>
                 <p>
                     Projekt zaliczeniowy. </br>
-                    Wykorzystano szablon <strong>LANDED</strong> ze strony: <a href="http://html5up.net" target="_blank">HTML5 UP</a>.   
+                    Wykorzystano szablon <strong>LANDED</strong> ze strony: <a href="http://html5up.net" target="_blank">HTML5 UP</a>   
                 </p>
             </header>
             <span class="image"><img src="{$conf->app_url}/images/auto1.jpg" alt="" /></span>
-        </div>
-        <li> <a href="#one" class="goto-next scrolly">Przejdź do serwisu</a></li>
+            <a href="#one" class="goto-next scrolly">Przejdź do serwisu</a>
     </section>
 {/block} 
 

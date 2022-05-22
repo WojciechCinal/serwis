@@ -1,7 +1,20 @@
 {extends file="main.tpl"}
 
 {block name=content}
-
+    <section>
+            {if $msgs->isMessage()}
+                <div class="messages">
+                    <h4>Informacje: </h4>
+                    <ol class="err">
+                        {foreach $msgs->getMessages() as $msg}
+                            {strip}
+                                <li>{$msg->text}</li>
+                                {/strip}
+                            {/foreach}
+                    </ol>
+                </div>
+                {/if}             
+    </section> 
 {/block}
 {block name=header}
     <section id="header">
@@ -14,6 +27,7 @@
                         <li><a href="{url action='page_offer'}">Oferta</a></li>
                         <li><a href="{url action='page_orders'}">Zamówienia</a></li>
                         <li><a href="{url action='loginView'}" class="button primary">Zaloguj</a></li>
+                        <li><a href="{url action='logout'}" class="button primary">Wyloguj</a></li>
                     </ul>
                 </nav>
             </header>
