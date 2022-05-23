@@ -25,8 +25,8 @@
                 <nav id="nav">
                     <ul>
                         <li><a href="index.php">Strona główna</a></li>
-                        <li><a href="{url action='page_offer'}">Oferta</a></li>
-                        <li><a href="{url action='page_orders'}">Zamówienia</a></li>
+                        <li><a href="{url action='offerView'}">Oferta</a></li>
+                        <li><a href="{url action='ordersView'}">Zamówienia</a></li>
                             {if count($conf->roles)>0}
                             <li><a href="{url action='logout'}" class="button primary">Wyloguj</a></li>
                             {else}	

@@ -15,6 +15,22 @@
             </div>
         {/if}             
     </section> 
+    <section id="one">
+        <div class="container">
+            <button style="float: right; margin-bottom: 15px; padding: 10px"> <a href="{url action='offerAddView'}">DODAJ OFERTĘ</a></button>
+            <table>
+                <tr><th>NAZWA NAPRAWY</th> <th>CENA</th> <th>KATEGORIA</th></tr>
+
+                {foreach $order_list as $wiersz}
+                    <tr>
+                        <td>{$wiersz["Nazwa_naprawy"]}</td>
+                        <td>{$wiersz["Cena"]}</td>
+                        <td>{$wiersz["Kategoria"]}</td>
+                    </tr>
+                {/foreach}
+            </table>
+        </div>
+    </section>
 {/block}
 {block name=header}
     <section id="header">
@@ -24,8 +40,8 @@
                 <nav id="nav">
                     <ul>
                         <li><a href="index.php">Strona główna</a></li>
-                        <li><a href="{url action='page_offer'}">Oferta</a></li>
-                        <li><a href="{url action='page_orders'}">Zamówienia</a></li>
+                        <li><a href="{url action='offerView'}">Oferta</a></li>
+                        <li><a href="{url action='ordersView'}">Zamówienia</a></li>
                             {if count($conf->roles)>0}
                             <li><a href="{url action='logout'}" class="button primary">Wyloguj</a></li>
                             {else}	
@@ -48,6 +64,7 @@
         </div>
         <li> <a href="#one" class="goto-next scrolly">Przejdź do serwisu</a></li>
     </section>
+
 {/block} 
 
 {block name=footer}

@@ -12,6 +12,10 @@ use core\SessionUtils;
 
 class LoginCtrl {
 
+    public function action_loginView() {
+        App::getSmarty()->display("LoginView.tpl");
+    }
+
     private $form;
     private $user;
 
