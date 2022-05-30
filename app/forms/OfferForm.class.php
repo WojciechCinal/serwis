@@ -2,7 +2,8 @@
 
 namespace app\forms;
 
-class OfferAddForm {
+class OfferForm {
+    public $id;
     public $nazwa;
     public $cena;
     public $kategoria;

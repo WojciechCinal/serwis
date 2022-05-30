@@ -17,15 +17,20 @@
     </section> 
     <section id="one">
         <div class="container">
-            <button style="float: right; margin-bottom: 15px; padding: 10px"> <a href="{url action='offerAddView'}">DODAJ OFERTĘ</a></button>
+            <button style="float: right; margin-bottom: 15px; padding: 10px">
+                <a href="{url action='offerAddView'}">DODAJ OFERTĘ</a></button>
             <table>
-                <tr><th>NAZWA NAPRAWY</th> <th>CENA</th> <th>KATEGORIA</th></tr>
+                <tr><th style="text-align: center">NAZWA NAPRAWY</th> <th style="text-align: center">CENA</th> 
+                    <th style="text-align: center">KATEGORIA</th> <th style="text-align: center">OPCJE</th></tr>
 
-                {foreach $order_list as $wiersz}
+                {foreach $offer_list as $wiersz}
                     <tr>
                         <td>{$wiersz["Nazwa_naprawy"]}</td>
-                        <td>{$wiersz["Cena"]}</td>
+                        <td style="text-align: right">{$wiersz["Cena"]}</td>
                         <td>{$wiersz["Kategoria"]}</td>
+                        <td>
+                            <a class="button" href="{url action='offerView'}/?delid={$wiersz["ID_Naprawy"]}">Usuń</a>
+                        </td>
                     </tr>
                 {/foreach}
             </table>

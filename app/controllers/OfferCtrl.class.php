@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use app\transfer\User;
-use app\forms\OfferAddForm;
+use app\forms\OfferForm;
 use core\App;
 use core\Utils;
 use core\ParamUtils;
@@ -13,10 +13,11 @@ use core\SessionUtils;
 class OfferCtrl {
 
     public function action_offerView() {
+        $this->action_offerDelete();
         App::getSmarty()->assign('form', $this->form);
         App::getMessages();
-        $order_list = App::getDB()->select("naprawa", "*");
-        App::getSmarty()->assign("order_list", $order_list);
+        $offer_list = App::getDB()->select("naprawa", "*");
+        App::getSmarty()->assign("offer_list", $offer_list);
         App::getSmarty()->display("page_OFFER.tpl");
     }
 
@@ -30,7 +31,7 @@ class OfferCtrl {
 
     public function __construct() {
 
-        $this->form = new OfferAddForm();
+        $this->form = new OfferForm();
     }
 
     public function getParams() {
@@ -137,6 +138,22 @@ class OfferCtrl {
         } else {
 
             $this->action_offerAddView();
+        }
+    }
+
+
+    public function action_offerDelete() {
+
+        if (isset($_GET['delid'])) {
+
+            try {
+                App::getDB()->delete("naprawa", [
+                    "ID_Naprawy" => htmlspecialchars($_GET['delid'])
+                ]);
+                Utils::addInfoMessage('Pomyślnie usunięto rekord');
+            } catch (\PDOException $ex) {
+                Utils::addErrorMessage("Błąd bazy dancych" . $ex->getMessage());
+            }
         }
     }
 

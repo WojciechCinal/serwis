@@ -2,19 +2,41 @@
 
 {block name=content}
     <section>
-            {if $msgs->isMessage()}
-                <div class="messages">
-                    <h4>Informacje: </h4>
-                    <ol class="err">
-                        {foreach $msgs->getMessages() as $msg}
-                            {strip}
-                                <li>{$msg->text}</li>
-                                {/strip}
-                            {/foreach}
-                    </ol>
-                </div>
-                {/if}             
-    </section> 
+        {if $msgs->isMessage()}
+            <div class="messages">
+                <h4>Informacje: </h4>
+                <ol class="err">
+                    {foreach $msgs->getMessages() as $msg}
+                        {strip}
+                            <li>{$msg->text}</li>
+                            {/strip}
+                        {/foreach}
+                </ol>
+            </div>
+        {/if}             
+    </section>
+    <section id="one">
+        <div class="container">
+            <table>
+                <tr><th style="text-align: center">DATA</th> <th style="text-align: center">MARKA</th> 
+                    <th style="text-align: center">MODEL</th> <th style="text-align: center">NR_REJ</th>
+                    <th style="text-align: center">UŻYTKOWNIK</th> <th style="text-align: center">OPCJE</th></tr>
+
+                {foreach $order_list as $wiersz}
+                    <tr>
+                        <td>{$wiersz["Data"]}</td>
+                        <td>{$wiersz["Marka"]}</td>
+                        <td>{$wiersz["Model"]}</td>
+                        <td>{$wiersz["Nr_rejestracyjny"]}</td>
+                        <td>{$wiersz["ID_User"]}</td>
+                        <td>
+                            <a class="button" href="{url action="#"}">Usuń</a>
+                        </td>
+                    </tr>
+                {/foreach}
+            </table>
+        </div>
+    </section>
 {/block}
 {block name=header}
     <section id="header">
