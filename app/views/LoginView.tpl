@@ -24,18 +24,8 @@
                 </form>
             </section>
             <section>
-                {if $msgs->isMessage()}
-                    <div class="messages">
-                        <h4>Wystąpiły błędy: </h4>
-                        <ol class="err">
-                            {foreach $msgs->getMessages() as $msg}
-                                {strip}
-                                    <li>{$msg->text}</li>
-                                    {/strip}
-                                {/foreach}
-                        </ol>
-                    </div>
-                {/if}             
+
+                {include file="message.tpl"}
 
             </section>
         </div>
@@ -47,10 +37,10 @@
     <section id="header">
         <div class="inner">
             <header id="header">
-                <h1 id="logo"><a href="index.php">Serwis samochodowy</a></h1>
+                <h1 id="logo"><a href="{url action='homeView'}">Serwis samochodowy</a></h1>
                 <nav id="nav">
                     <ul>
-                        <li><a href="index.php">Strona główna</a></li>
+                        <li><a href="{url action='homeView'}">Strona główna</a></li>
                         <li><a href="{url action='offerView'}">Oferta</a></li>
                         <li><a href="{url action='ordersView'}">Zamówienia</a></li>
                     </ul>

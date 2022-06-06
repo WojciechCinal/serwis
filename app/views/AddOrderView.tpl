@@ -5,26 +5,32 @@
         <section>
             </br></br>
             {include file="message.tpl"}
-            <form action="{url action='offerAdd'}" method="post">
-                <h3>Dodaj nową ofertę</h3>
+            <form action="{url action='orderAdd'}" method="post">
+                <h3>Dodaj nowe zamówienie</h3>
                 <fieldset>
                     <div class="row gtr-uniform gtr-50">
                         <div class="col-4 col-12-xsmall">
-                            <label for="id_nazwa">Nazwa naprawy: </label>
-                            <input id="id_nazwa" type="text" name="nazwa"/>
+                            <label for="id_data">Data: </label>
+                            <input id="id_data" type="text" name="data"/>
                         </div>
                         <div class="col-4 col-12-xsmall">
-                            <label for="id_cena">Cena: </label>
-                            <input id="id_cena" type="text" name="cena" /><br />
+                            <label for="id_marka">Marka: </label>
+                            <input id="id_marka" type="text" name="marka"/>
                         </div>
                         <div class="col-4 col-12-xsmall">
-                            <label for="id_kategoria">Kategoria: </label>
-                            <select name="kategoria">
-                                <option value="UP">Usługa podstawowa</option>
-                                <option value="UN">Układ napędowy</option>
-                                <option value="US">Układ spalinowy</option>
-                                <option value="LB">Lakierniczo - blacharskie</option>
-                                <option value="W">Wulkanizacja</option>
+                            <label for="id_model">Model: </label>
+                            <input id="id_model" type="text" name="model" /><br />
+                        </div>
+                        <div class="col-6 col-12-xsmall">
+                            <label for="id_nrr">Nr rejestracyjny: </label>
+                            <input id="id_nrr" type="text" name="nrr" /><br />
+                        </div>
+                        <div class="col-6 col-12-xsmall">
+                            <label for="id_naprawa">Nazwa naprawy: </label>
+                            <select name="naprawa">
+                                {foreach $repair_list as $r}
+                                <option value={$r["ID_Naprawy"]}> {$r["Nazwa_naprawy"]}, {$r["Cena"]} zł </option>
+                                {/foreach}
                             </select>
                         </div>
 
@@ -65,3 +71,4 @@
         </ul>
     </section>
 {/block}
+

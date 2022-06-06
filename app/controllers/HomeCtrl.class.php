@@ -9,6 +9,7 @@ use core\Utils;
 use core\ParamUtils;
 use core\RoleUtils;
 use core\SessionUtils;
+use core\Message;
 
 class HomeCtrl {
 

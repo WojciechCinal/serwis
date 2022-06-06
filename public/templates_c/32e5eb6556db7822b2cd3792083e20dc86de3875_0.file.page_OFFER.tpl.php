@@ -1,42 +1,43 @@
 <?php
-/* Smarty version 4.1.0, created on 2022-05-30 20:57:41
+/* Smarty version 4.1.0, created on 2022-06-05 17:33:20
   from 'C:\xampp\htdocs\serwis\app\views\page_OFFER.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.1.0',
-  'unifunc' => 'content_629513a571dba2_98622873',
+  'unifunc' => 'content_629cccc0f00c02_96744736',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '32e5eb6556db7822b2cd3792083e20dc86de3875' => 
     array (
       0 => 'C:\\xampp\\htdocs\\serwis\\app\\views\\page_OFFER.tpl',
-      1 => 1653934870,
+      1 => 1654443187,
       2 => 'file',
     ),
   ),
   'includes' => 
   array (
+    'file:message.tpl' => 1,
   ),
 ),false)) {
-function content_629513a571dba2_98622873 (Smarty_Internal_Template $_smarty_tpl) {
+function content_629cccc0f00c02_96744736 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1500542801629513a56c4ef8_92766478', 'content');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1157778043629cccc0ec8f38_75871627', 'content');
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_298993845629513a570e690_13224164', 'header');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_860916158629cccc0eebca2_90937254', 'header');
 ?>
  
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_2021628005629513a571c176_61503193', 'footer');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1620910881629cccc0eff0a6_03666658', 'footer');
 ?>
 
 
@@ -44,37 +45,19 @@ $_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_2021628005629513a5
 <?php $_smarty_tpl->inheritance->endChild($_smarty_tpl, "main.tpl");
 }
 /* {block 'content'} */
-class Block_1500542801629513a56c4ef8_92766478 extends Smarty_Internal_Block
+class Block_1157778043629cccc0ec8f38_75871627 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'content' => 
   array (
-    0 => 'Block_1500542801629513a56c4ef8_92766478',
+    0 => 'Block_1157778043629cccc0ec8f38_75871627',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
 
-    <section>
-        <?php if ($_smarty_tpl->tpl_vars['msgs']->value->isMessage()) {?>
-            <div class="messages">
-                <h4>Informacje: </h4>
-                <ol class="err">
-                    <?php
-$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['msgs']->value->getMessages(), 'msg');
-$_smarty_tpl->tpl_vars['msg']->do_else = true;
-if ($_from !== null) foreach ($_from as $_smarty_tpl->tpl_vars['msg']->value) {
-$_smarty_tpl->tpl_vars['msg']->do_else = false;
+    <?php $_smarty_tpl->_subTemplateRender("file:message.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
-                        <li><?php echo $_smarty_tpl->tpl_vars['msg']->value->text;?>
-</li>
-                        <?php
-}
-$_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
-                </ol>
-            </div>
-        <?php }?>             
-    </section> 
     <section id="one">
         <div class="container">
             <button style="float: right; margin-bottom: 15px; padding: 10px">
@@ -97,7 +80,7 @@ $_smarty_tpl->tpl_vars['wiersz']->do_else = false;
 </td>
                         <td><?php echo $_smarty_tpl->tpl_vars['wiersz']->value["Kategoria"];?>
 </td>
-                        <td>
+                        <td style="text-align: right">
                             <a class="button" href="<?php echo call_user_func_array( $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['url'][0], array( array('action'=>'offerView'),$_smarty_tpl ) );?>
 /?delid=<?php echo $_smarty_tpl->tpl_vars['wiersz']->value["ID_Naprawy"];?>
 ">Usuń</a>
@@ -114,12 +97,12 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
 }
 /* {/block 'content'} */
 /* {block 'header'} */
-class Block_298993845629513a570e690_13224164 extends Smarty_Internal_Block
+class Block_860916158629cccc0eebca2_90937254 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'header' => 
   array (
-    0 => 'Block_298993845629513a570e690_13224164',
+    0 => 'Block_860916158629cccc0eebca2_90937254',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -128,10 +111,12 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
     <section id="header">
         <div class="inner">
             <header id="header">
-                <h1 id="logo"><a href="index.php">Serwis samochodowy</a></h1>
+                <h1 id="logo"><a href="<?php echo call_user_func_array( $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['url'][0], array( array('action'=>'homeView'),$_smarty_tpl ) );?>
+">Serwis samochodowy</a></h1>
                 <nav id="nav">
                     <ul>
-                        <li><a href="index.php">Strona główna</a></li>
+                        <li><a href="<?php echo call_user_func_array( $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['url'][0], array( array('action'=>'homeView'),$_smarty_tpl ) );?>
+">Strona główna</a></li>
                         <li><a href="<?php echo call_user_func_array( $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['url'][0], array( array('action'=>'offerView'),$_smarty_tpl ) );?>
 ">Oferta</a></li>
                         <li><a href="<?php echo call_user_func_array( $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['url'][0], array( array('action'=>'ordersView'),$_smarty_tpl ) );?>
@@ -167,12 +152,12 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block 'header'} */
 /* {block 'footer'} */
-class Block_2021628005629513a571c176_61503193 extends Smarty_Internal_Block
+class Block_1620910881629cccc0eff0a6_03666658 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'footer' => 
   array (
-    0 => 'Block_2021628005629513a571c176_61503193',
+    0 => 'Block_1620910881629cccc0eff0a6_03666658',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {

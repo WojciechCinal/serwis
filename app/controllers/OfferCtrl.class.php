@@ -9,6 +9,7 @@ use core\Utils;
 use core\ParamUtils;
 use core\RoleUtils;
 use core\SessionUtils;
+use core\Message;
 
 class OfferCtrl {
 
@@ -51,16 +52,16 @@ class OfferCtrl {
         if (!App::getMessages()->isError()) {
 
             if ($this->form->nazwa == "") {
-                Utils::addErrorMessage('Nie podano nazwy naprawy');
+                App::getMessages()->addMessage(new Message("Nie podano nazwy naprawy.", Message::ERROR));
             }
             if ($this->form->cena == "") {
-                Utils::addErrorMessage('Nie podano ceny');
+                App::getMessages()->addMessage(new Message("Nie podano ceny.", Message::ERROR));
             }
         }
         if (!App::getMessages()->isError()) {
 
             if (!is_numeric($this->form->cena)) {
-                Utils::addErrorMessage('Kwota nie jest liczbą');
+                App::getMessages()->addMessage(new Message("Kwota nie jest liczbą.", Message::ERROR));
             }
 
             return !App::getMessages()->isError();
@@ -81,7 +82,7 @@ class OfferCtrl {
                             "Kategoria" => $this->form->kategoria
                         ]);
                     } catch (\PDOException $ex) {
-                        Utils::addErrorMessage("Błąd bazy dancych" . $ex->getMessage());
+                        App::getMessages()->addMessage(new Message("Błąd bazy dancych" . $ex->getMessage(), Message::ERROR));
                     }
                     break;
                 case 'UP':
@@ -93,7 +94,7 @@ class OfferCtrl {
                             "Kategoria" => $this->form->kategoria
                         ]);
                     } catch (\PDOException $ex) {
-                        Utils::addErrorMessage("Błąd bazy dancych" . $ex->getMessage());
+                        App::getMessages()->addMessage(new Message("Błąd bazy dancych" . $ex->getMessage(), Message::ERROR));
                     }
                     break;
                 case 'UN':
@@ -105,7 +106,7 @@ class OfferCtrl {
                             "Kategoria" => $this->form->kategoria
                         ]);
                     } catch (\PDOException $ex) {
-                        Utils::addErrorMessage("Błąd bazy dancych" . $ex->getMessage());
+                        App::getMessages()->addMessage(new Message("Błąd bazy dancych" . $ex->getMessage(), Message::ERROR));
                     }
                     break;
                 case 'US':
@@ -117,7 +118,7 @@ class OfferCtrl {
                             "Kategoria" => $this->form->kategoria
                         ]);
                     } catch (\PDOException $ex) {
-                        Utils::addErrorMessage("Błąd bazy dancych" . $ex->getMessage());
+                        App::getMessages()->addMessage(new Message("Błąd bazy dancych" . $ex->getMessage(), Message::ERROR));
                     }
                     break;
                 case 'W':
@@ -129,7 +130,7 @@ class OfferCtrl {
                             "Kategoria" => $this->form->kategoria
                         ]);
                     } catch (\PDOException $ex) {
-                        Utils::addErrorMessage("Błąd bazy dancych" . $ex->getMessage());
+                        App::getMessages()->addMessage(new Message("Błąd bazy dancych" . $ex->getMessage(), Message::ERROR));
                     }
                     break;
             }
@@ -141,19 +142,21 @@ class OfferCtrl {
         }
     }
 
-
     public function action_offerDelete() {
+        if (RoleUtils::inRole("admin")) {
+            if (isset($_GET['delid'])) {
 
-        if (isset($_GET['delid'])) {
-
-            try {
-                App::getDB()->delete("naprawa", [
-                    "ID_Naprawy" => htmlspecialchars($_GET['delid'])
-                ]);
-                Utils::addInfoMessage('Pomyślnie usunięto rekord');
-            } catch (\PDOException $ex) {
-                Utils::addErrorMessage("Błąd bazy dancych" . $ex->getMessage());
+                try {
+                    App::getDB()->delete("naprawa", [
+                        "ID_Naprawy" => htmlspecialchars($_GET['delid'])
+                    ]);
+                    App::getMessages()->addMessage(new Message("Pomyślnie usunięto rekord z bazy.", Message::INFO));
+                } catch (\PDOException $ex) {
+                    App::getMessages()->addMessage(new Message("Błąd bazy dancych" . $ex->getMessage(), Message::ERROR));
+                }
             }
+        } else {
+            App::getMessages()->addMessage(new Message("Usuwać rekordy może jedynie administrator.", Message::ERROR));
         }
     }
 

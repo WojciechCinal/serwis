@@ -18,3 +18,6 @@ Utils::addRoute('logout', 'LoginCtrl');
 
 Utils::addRoute('offerAddView', 'OfferCtrl',["admin"]);
 Utils::addRoute('offerAdd', 'OfferCtrl',["admin"]);
+
+Utils::addRoute('orderAddView', 'OrderCtrl',["admin","user"]);
+Utils::addRoute('orderAdd', 'OrderCtrl',["admin","user"]);

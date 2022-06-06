@@ -8,7 +8,7 @@ use core\App;
 use core\Utils;
 use core\ParamUtils;
 use core\RoleUtils;
-use core\SessionUtils;
+use core\Message;
 
 class LoginCtrl {
 
@@ -40,10 +40,10 @@ class LoginCtrl {
         if (!App::getMessages()->isError()) {
 
             if ($this->form->login == "") {
-                Utils::addErrorMessage('Nie podano loginu');
+                App::getMessages()->addMessage(new Message("Nie podano loginu", Message::ERROR));
             }
             if ($this->form->pass == "") {
-                Utils::addErrorMessage('Nie podano hasła');
+                App::getMessages()->addMessage(new Message("Nie podano hasła", Message::ERROR));             
             }
         }
 
@@ -56,9 +56,9 @@ class LoginCtrl {
                 $user = new User($this->form->login, $this->form->login);
 
                 RoleUtils::addRole($user->role);
-                Utils::addInfoMessage('Zalogowano jako: ' . $user->role);
+                App::getMessages()->addMessage(new Message("Zalogowano jako: ". $user->role, \core\Message::INFO));
             } else {
-                Utils::addErrorMessage('Niepoprawny login lub hasło');
+                App::getMessages()->addMessage(new Message("Niepoprawny login lub hasło!", \core\Message::ERROR)); 
             }
         }
 
@@ -81,8 +81,8 @@ class LoginCtrl {
     public function action_logout() {
 
         session_destroy();
-
-        Utils::addInfoMessage('Poprawnie wylogowano z systemu');
+        
+        App::getMessages()->addMessage(new Message("Poprawnie wylogowano z systemu.", Message::INFO));
 
         $this->generateViewLogin();
     }

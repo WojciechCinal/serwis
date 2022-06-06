@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.1.0, created on 2022-06-05 18:59:41
-  from 'C:\xampp\htdocs\serwis\app\views\AddOfferView.tpl' */
+/* Smarty version 4.1.0, created on 2022-06-06 22:45:09
+  from 'C:\xampp\htdocs\serwis\app\views\AddOrderView.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.1.0',
-  'unifunc' => 'content_629ce0fd056444_41699815',
+  'unifunc' => 'content_629e6755153f56_98230784',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    'a445b180fe1b850516aee139524ee277dd183250' => 
+    'bf0bf7b191f230bf2748dd0a090601d56b09b50b' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\serwis\\app\\views\\AddOfferView.tpl',
-      1 => 1654443124,
+      0 => 'C:\\xampp\\htdocs\\serwis\\app\\views\\AddOrderView.tpl',
+      1 => 1654544492,
       2 => 'file',
     ),
   ),
@@ -21,34 +21,35 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:message.tpl' => 1,
   ),
 ),false)) {
-function content_629ce0fd056444_41699815 (Smarty_Internal_Template $_smarty_tpl) {
+function content_629e6755153f56_98230784 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1800753437629ce0fd0426a7_53986323', 'content');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1284884800629e675512b8c4_07052893', 'content');
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1403097842629ce0fd04ced4_26645310', 'header');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1612681295629e675514a865_22709063', 'header');
 ?>
  
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_2135669314629ce0fd054878_71176200', 'footer');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_634013533629e6755152273_95514634', 'footer');
 ?>
+
 
 <?php $_smarty_tpl->inheritance->endChild($_smarty_tpl, "main.tpl");
 }
 /* {block 'content'} */
-class Block_1800753437629ce0fd0426a7_53986323 extends Smarty_Internal_Block
+class Block_1284884800629e675512b8c4_07052893 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'content' => 
   array (
-    0 => 'Block_1800753437629ce0fd0426a7_53986323',
+    0 => 'Block_1284884800629e675512b8c4_07052893',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -59,27 +60,43 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
             </br></br>
             <?php $_smarty_tpl->_subTemplateRender("file:message.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
-            <form action="<?php echo call_user_func_array( $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['url'][0], array( array('action'=>'offerAdd'),$_smarty_tpl ) );?>
+            <form action="<?php echo call_user_func_array( $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['url'][0], array( array('action'=>'orderAdd'),$_smarty_tpl ) );?>
 " method="post">
-                <h3>Dodaj nową ofertę</h3>
+                <h3>Dodaj nowe zamówienie</h3>
                 <fieldset>
                     <div class="row gtr-uniform gtr-50">
                         <div class="col-4 col-12-xsmall">
-                            <label for="id_nazwa">Nazwa naprawy: </label>
-                            <input id="id_nazwa" type="text" name="nazwa"/>
+                            <label for="id_data">Data: </label>
+                            <input id="id_data" type="text" name="data"/>
                         </div>
                         <div class="col-4 col-12-xsmall">
-                            <label for="id_cena">Cena: </label>
-                            <input id="id_cena" type="text" name="cena" /><br />
+                            <label for="id_marka">Marka: </label>
+                            <input id="id_marka" type="text" name="marka"/>
                         </div>
                         <div class="col-4 col-12-xsmall">
-                            <label for="id_kategoria">Kategoria: </label>
-                            <select name="kategoria">
-                                <option value="UP">Usługa podstawowa</option>
-                                <option value="UN">Układ napędowy</option>
-                                <option value="US">Układ spalinowy</option>
-                                <option value="LB">Lakierniczo - blacharskie</option>
-                                <option value="W">Wulkanizacja</option>
+                            <label for="id_model">Model: </label>
+                            <input id="id_model" type="text" name="model" /><br />
+                        </div>
+                        <div class="col-6 col-12-xsmall">
+                            <label for="id_nrr">Nr rejestracyjny: </label>
+                            <input id="id_nrr" type="text" name="nrr" /><br />
+                        </div>
+                        <div class="col-6 col-12-xsmall">
+                            <label for="id_naprawa">Nazwa naprawy: </label>
+                            <select name="naprawa">
+                                <?php
+$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['repair_list']->value, 'r');
+$_smarty_tpl->tpl_vars['r']->do_else = true;
+if ($_from !== null) foreach ($_from as $_smarty_tpl->tpl_vars['r']->value) {
+$_smarty_tpl->tpl_vars['r']->do_else = false;
+?>
+                                <option value=<?php echo $_smarty_tpl->tpl_vars['r']->value["ID_Naprawy"];?>
+> <?php echo $_smarty_tpl->tpl_vars['r']->value["Nazwa_naprawy"];?>
+, <?php echo $_smarty_tpl->tpl_vars['r']->value["Cena"];?>
+ zł </option>
+                                <?php
+}
+$_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                             </select>
                         </div>
 
@@ -96,12 +113,12 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block 'content'} */
 /* {block 'header'} */
-class Block_1403097842629ce0fd04ced4_26645310 extends Smarty_Internal_Block
+class Block_1612681295629e675514a865_22709063 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'header' => 
   array (
-    0 => 'Block_1403097842629ce0fd04ced4_26645310',
+    0 => 'Block_1612681295629e675514a865_22709063',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -131,12 +148,12 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block 'header'} */
 /* {block 'footer'} */
-class Block_2135669314629ce0fd054878_71176200 extends Smarty_Internal_Block
+class Block_634013533629e6755152273_95514634 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'footer' => 
   array (
-    0 => 'Block_2135669314629ce0fd054878_71176200',
+    0 => 'Block_634013533629e6755152273_95514634',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
