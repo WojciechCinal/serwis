@@ -44,8 +44,9 @@ class OrderCtrl {
         if (RoleUtils::inRole("user")) {
             $this->form->id_u = 2;
         }
-        $v = new Validator();
-        $this->form->id_n = ParamUtils::getFromRequest('naprawa');
+        $v = new Validator();       
+       $this->form->id_n =  ParamUtils::getFromPost('naprawa');
+       // $this->form->id_n = ParamUtils::getFromRequest('naprawa');
         $this->form->marka = $v->validateFromPost('marka', [
             'trim' => true,
             'required' => true,
@@ -97,9 +98,9 @@ class OrderCtrl {
                 App::getMessages()->addMessage(new Message("Błąd bazy dancych" . $ex->getMessage(), Message::ERROR));
             }
             if (!App::getMessages()->isError()) {
-                $this->selectNaprawa();
+                $this->getNaprawa();
             } else {
-                App::getMessages()->addMessage(new Message("Nie udało się dodać rekordu do tabeli zamówienia", Message::ERROR));
+                App::getMessages()->addMessage(new Message("Nie udało się pobrać ceny z tabeli", Message::ERROR));
             }
             if (!App::getMessages()->isError()) {
                 $this->lastIDZamowienia();
@@ -109,7 +110,7 @@ class OrderCtrl {
             if (!App::getMessages()->isError()) {
                 $this->insertPOM_ZAM();
             } else {
-                App::getMessages()->addMessage(new Message("Nie udało się znależć ostatniego rekordu w tabeli zamówienia", Message::ERROR));
+                App::getMessages()->addMessage(new Message("Nie udało się dodać rekordu w tabeli pom_zam", Message::ERROR));
             }
             if (!App::getMessages()->isError()) {
                 App::getMessages()->addMessage(new Message("Pomyślnie dodano zamówienie", Message::INFO));
@@ -121,12 +122,14 @@ class OrderCtrl {
         }
     }
 
-    public function selectNaprawa() {
+    public function getNaprawa() {
         try {
-            $this->form->cena = App::getDB()->select("naprawa","Cena", [
+            
+            $this->record = App::getDB()->get("naprawa", "Cena", [
                 "ID_Naprawy" => $this->form->id_n
-                    ]);
-
+            ]);
+   
+            $this->form->cena = $this->record;
         } catch (\PDOException $ex) {
             App::getMessages()->addMessage(new Message("Błąd bazy dancych" . $ex->getMessage(), Message::ERROR));
         }
@@ -142,7 +145,7 @@ class OrderCtrl {
 
     public function insertPOM_ZAM() {
         try {
-            $this->form->id_z = App::getDB()->insert("pom_zamowienia", [
+            App::getDB()->insert("pom_zamowienia", [
                 "ID_Naprawy" => $this->form->id_n,
                 "ID_Zamowienia" => $this->form->id_z,
                 "Cena" => $this->form->cena
@@ -203,8 +206,8 @@ class OrderCtrl {
                 } catch (\PDOException $ex) {
                     App::getMessages()->addMessage(new Message("Błąd bazy dancych" . $ex->getMessage(), Message::ERROR));
                 }
-            }
-        }App::getMessages()->addMessage(new Message("Usuwanie zamówień z listy wymaga uprawnień administratora.", Message::ERROR));
+            }else{ App::getMessages()->addMessage(new Message("Usuwanie zamówień z listy wymaga uprawnień administratora.", Message::ERROR));}
+        }
     }
 
 }
